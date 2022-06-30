@@ -8,7 +8,7 @@
 import axios from "axios";
 const request = axios.create({
     //  接收方法的返回值
-    baseURL: "http://ttapi.research.itcast.cn", //请求根路径
+    baseURL: "http://toutiao.itheima.net", //请求根路径
 });
 
 // 导出返回对象
