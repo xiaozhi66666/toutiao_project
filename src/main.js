@@ -12,7 +12,7 @@ import "vant/lib/index.css";
 import "amfe-flexible";
 
 Vue.use(Vant);
-Vue.config.productionTip = false;
+Vue.prototype.validate = Vue.config.productionTip = false;
 
 new Vue({
     router,

@@ -8,3 +8,11 @@ export const login = (data) => {
         data,
     });
 };
+
+// 导出登录页发起获取验证码的请求
+export const getCode = (mobile) => {
+    return request({
+        method: "GET",
+        url: `/v1_0/sms/codes/${mobile}`, // 传参：手机号
+    });
+};

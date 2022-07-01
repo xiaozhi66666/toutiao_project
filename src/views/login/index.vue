@@ -4,10 +4,10 @@
     <van-nav-bar class="van-nav-title" title="登录" />
     <!-- nav标题导航栏E -->
     <!-- 登录表单S -->
-    <van-form @submit="onSubmit">
+    <van-form ref="loginForm" @submit="onSubmit">
       <van-field
         placeholder="请输入手机号"
-        name="手机号"
+        name="mobile"
         class="login-contain"
         v-model="user.mobile"
         ><i
@@ -18,19 +18,28 @@
       ></van-field>
       <van-field
         type="text"
-        name="验证码"
+        name="code"
         placeholder="请输入验证码"
         center
         v-model="user.code"
       >
         <i slot="left-icon" class="toutiao toutiao-yanzhengma"></i>
         <template #button>
+          <van-count-down
+            :time="1000 * 60"
+            format="ss s"
+            v-if="isShowTime"
+            @finish="finish"
+          />
           <van-button
             size="small"
             type="default"
             round
             color="#ededed"
             class="login-yzm"
+            native-type="button"
+            @click="sendCode"
+            v-else
             >发送验证码</van-button
           >
         </template></van-field
@@ -51,7 +60,7 @@
 
 <script>
 // 导入登录验证请求
-import { login } from "@/api/user.js";
+import { login, getCode } from "@/api/user.js";
 export default {
   name: "LoginIndex",
 
@@ -59,10 +68,11 @@ export default {
     return {
       // 定义一个变量对手机号和验证码进行双向绑定，方便获取数据
       user: {
-        mobile: "13213454567",
-        code: "246810",
+        mobile: "",
+        code: "",
         duration: 0,
       },
+      isShowTime: false,
     };
   },
 
@@ -98,6 +108,31 @@ export default {
         }
       }
       // 4：根据请求返回结果进行操作
+    },
+    async sendCode() {
+      // console.log("loginFn");
+      // 1:校验手机号
+      const ref =
+        /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[189]))\d{8}$/;
+      if (!ref.test(this.user.mobile))
+        return this.$toast.fail("手机格式不正确");
+      this.isShowTime = true;
+      try {
+        const res = await getCode(this.user.mobile);
+        console.log("登录成功" + res);
+      } catch (err) {
+        console.log("获取验证码失败");
+      }
+      // try {
+      //   console.log(this.$refs.loginForm.validate("mobile"));
+      //   const res = await this.$refs.loginForm.validate("mobile");
+      //   console.log(res);
+      // } catch (err) {
+      //   console.log(err);
+      // }
+    },
+    finish() {
+      this.isShowTime = false;
     },
   },
 };
