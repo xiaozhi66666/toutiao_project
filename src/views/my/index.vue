@@ -32,25 +32,25 @@
           <span class="count">10</span><span class="text">关注</span>
         </div>
         <div class="data-item">
-          <span class="count">10</span><span class="text">粉丝</span></span>
+          <span class="count">10</span><span class="text">粉丝</span>
         </div>
         <div class="data-item">
-          <span class="count">10</span><span class="text">获赞</span></span>
+          <span class="count">10</span><span class="text">获赞</span>
         </div>
       </div>
     </div>
     <!-- 已登录顶部背景区域E -->
     <!-- 收藏历史导航区域S -->
-    <van-grid :column-num="2" class="grid-nav"  clickable>
-  <van-grid-item class="grid-item" >
-    <i slot="icon" class="toutiao toutiao-shoucang"></i>
-    <span slot="text">收藏</span>
-  </van-grid-item>
- <van-grid-item class="grid-item" >
-    <i slot="icon" class="toutiao toutiao-lishi"></i>
-    <span slot="text">收藏</span>
-  </van-grid-item>
-</van-grid>
+    <van-grid :column-num="2" class="grid-nav" clickable>
+      <van-grid-item class="grid-item">
+        <i slot="icon" class="toutiao toutiao-shoucang"></i>
+        <span slot="text">收藏</span>
+      </van-grid-item>
+      <van-grid-item class="grid-item">
+        <i slot="icon" class="toutiao toutiao-lishi"></i>
+        <span slot="text">收藏</span>
+      </van-grid-item>
+    </van-grid>
     <!-- 收藏历史导航区域E -->
   </div>
 </template>
