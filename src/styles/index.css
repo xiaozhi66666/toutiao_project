@@ -1,29 +1,11 @@
 @import 'toutiao-icon.css';
+body {
+  background-color: #f5f7f9;
+}
 .van-nav-bar {
   background-color: #3296fa !important;
 }
-.van-nav-bar .van-nav-bar__title {
-  color: #fff;
-}
-.toutiao {
-  font-size: 26px;
-}
-.login-yzm {
-  width: 130px;
-  height: 36px!important;
-  line-height: 36px;
-}
-.login-yzm .van-button__text {
-  color: #666;
-  font-size: 14px;
-}
-.btn-login {
-  padding: 53px 33px;
-}
-.btn-login .btn-login-wrap {
-  background-color: #6db4fb;
-  border: 0;
-}
-.van-field__control {
-  padding-left: 10px!important;
+.van-nav-bar .van-nav-bar__title,
+.van-nav-bar .van-icon-cross {
+  color: #fff !important;
 }

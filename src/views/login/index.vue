@@ -1,7 +1,9 @@
 <template>
   <div>
     <!-- nav标题导航栏S -->
-    <van-nav-bar class="van-nav-title" title="登录" />
+    <van-nav-bar class="van-nav-title" title="登录"
+      ><van-icon name="cross" slot="left" @click="$router.back()"
+    /></van-nav-bar>
     <!-- nav标题导航栏E -->
     <!-- 登录表单S -->
     <van-form ref="loginForm" @submit="onSubmit">
@@ -61,6 +63,7 @@
 <script>
 // 导入登录验证请求
 import { login, getCode } from "@/api/user.js";
+
 export default {
   name: "LoginIndex",
 
@@ -68,8 +71,8 @@ export default {
     return {
       // 定义一个变量对手机号和验证码进行双向绑定，方便获取数据
       user: {
-        mobile: "",
-        code: "",
+        mobile: "13211112222",
+        code: "246810",
         duration: 0,
       },
       isShowTime: false,
@@ -94,9 +97,14 @@ export default {
       // 3：向后台发送登录请求
       try {
         const res = await login(user);
-        console.log("登录成功！", res);
+        // console.log("登录成功！", res);
+        // 将data解构出来
+        const { data } = res;
+        this.$store.commit("setUser", data.data);
+
         // 只要后面再次出现了this.$toast()方法就会覆盖之前的提示
         this.$toast.success("登录成功！");
+        // window.location.href = "http://localhost:8080/my#/my";
       } catch (err) {
         if (err.response.status === 400) {
           this.$toast.fail("手机号或者验证码错误");
@@ -132,11 +140,41 @@ export default {
       // }
     },
     finish() {
+      // 当倒计时结束时触发的函数
       this.isShowTime = false;
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
+// 字体图标样式
+.toutiao {
+  font-size: 26px;
+}
+// 验证码按钮样式
+.login-yzm {
+  width: 130px;
+  height: 36px !important;
+  line-height: 36px;
+
+  .van-button__text {
+    color: #666;
+    font-size: 0.275rem;
+  } // color
+}
+// .van-button__text{
+// }
+// 按钮样式
+.btn-login {
+  padding: 53px 33px;
+  .btn-login-wrap {
+    background-color: #6db4fb;
+    border: 0;
+  }
+}
+// 输入框的样式
+.van-field__control {
+  padding-left: 10px !important;
+}
 </style>
