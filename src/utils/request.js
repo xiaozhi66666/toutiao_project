@@ -4,7 +4,6 @@
 2：配置请求根路径
 3：默认导出请求对象
 */
-
 import axios from "axios";
 const request = axios.create({
     //  接收方法的返回值

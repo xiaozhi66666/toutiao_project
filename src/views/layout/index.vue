@@ -19,7 +19,9 @@
       </van-tabbar-item>
       <van-tabbar-item to="/my">
         <i slot="icon" class="toutiao toutiao-wode"></i>
-        <span class="text">我的</span>
+        <!-- 可以通过$store.state.容器名 访问到vuex中的容器变量 -->
+        <!-- 也可以通过 import {mapState} from vuex ==> 计算属性中 computed:{ ... mapState(['vuex中的容器名'])} 进行取出-->
+        <span class="text">{{ $store.state.user ? "我的" : "未登录" }}</span>
       </van-tabbar-item>
     </van-tabbar>
     <!-- 底部tab栏E -->
@@ -46,7 +48,7 @@ export default {
     font-size: 28px;
   }
   span.text {
-    font-size: 18px;
+    font-size: 0.32rem;
   }
 }
 </style>

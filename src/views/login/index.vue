@@ -104,6 +104,7 @@ export default {
 
         // 只要后面再次出现了this.$toast()方法就会覆盖之前的提示
         this.$toast.success("登录成功！");
+        this.$router.push("my");
         // window.location.href = "http://localhost:8080/my#/my";
       } catch (err) {
         if (err.response.status === 400) {
