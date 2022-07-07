@@ -130,7 +130,7 @@ export default {
         const res = await getCode(this.user.mobile);
         console.log("登录成功" + res);
       } catch (err) {
-        console.log("获取验证码失败");
+        this.$toast.fail("获取验证码失败!");
       }
       // try {
       //   console.log(this.$refs.loginForm.validate("mobile"));

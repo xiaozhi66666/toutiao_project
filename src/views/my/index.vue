@@ -4,13 +4,8 @@
     <div class="header user-info" v-if="user">
       <div class="data-info">
         <div class="left">
-          <van-image
-            class="user-img"
-            src="https://img01.yzcdn.cn/vant/cat.jpeg"
-            fit="cover"
-            round
-          />
-          <span class="user-name">黑马杭州前端31期</span>
+          <van-image class="user-img" :src="userInfo.photo" fit="cover" round />
+          <span class="user-name">{{ userInfo.name }}</span>
         </div>
         <div class="right">
           <van-button size="small" round>编辑资料</van-button>
@@ -18,16 +13,20 @@
       </div>
       <div class="collect-histroy">
         <div class="data-item">
-          <span class="count">10</span><span class="text">头条</span>
+          <span class="count">{{ userInfo.art_count }}</span
+          ><span class="text">头条</span>
         </div>
         <div class="data-item">
-          <span class="count">10</span><span class="text">关注</span>
+          <span class="count">{{ userInfo.follow_count }}</span
+          ><span class="text">关注</span>
         </div>
         <div class="data-item">
-          <span class="count">10</span><span class="text">粉丝</span>
+          <span class="count">{{ userInfo.fans_count }}</span
+          ><span class="text">粉丝</span>
         </div>
         <div class="data-item">
-          <span class="count">10</span><span class="text">获赞</span>
+          <span class="count">{{ userInfo.like_count }}</span
+          ><span class="text">获赞</span>
         </div>
       </div>
     </div>
@@ -36,6 +35,7 @@
     <div class="header not-login" v-else>
       <div class="mobile-btn" @click="$router.push('/login')">
         <img src="~@/assets/images/mobile.png" alt="" class="mobile-img" />
+
         <span class="text">登录/注册</span>
       </div>
     </div>
@@ -69,12 +69,19 @@
 
 <script>
 import { mapState } from "vuex";
+import { getUserInfo } from "@/api/user.js";
 export default {
   name: "MyIndex",
+  data() {
+    return {
+      userInfo: {},
+    };
+  },
   methods: {
     showPopup() {
       return false;
     },
+
     exitFn() {
       this.$dialog
         .confirm({
@@ -90,6 +97,20 @@ export default {
           console.log("取消");
         });
     },
+    async loaderUserInfo() {
+      // 在这里先判断用户是否处于登录状态，如果user这个token存在表示用户处于登录状态，可以发起获取用户信息的请求，但是注意看接口文档必须携带请求头信息，去接口处设置
+      if (this.user) {
+        try {
+          const { data } = await getUserInfo();
+          this.userInfo = data.data;
+        } catch (error) {
+          this.$toast.fail("获取数据失败，请稍后重试！");
+        }
+      }
+    },
+  },
+  created() {
+    this.loaderUserInfo();
   },
   computed: {
     ...mapState(["user"]),
