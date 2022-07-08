@@ -1,7 +1,5 @@
 // 导入根请求
 import request from "@/utils/request.js";
-// 导入vuex中定义好的保存用户token的模块//加载进来容器模块
-import store from "@/store";
 // 导出基于根请求配置好的登录获取数据请求
 export const login = (data) => {
     return request({
@@ -15,7 +13,7 @@ export const login = (data) => {
 export const getCode = (mobile) => {
     return request({
         method: "GET",
-        url: `/v1_0/sms/codes/${mobile}`, // 传参：手机号
+        url: `/v1_0/sms/codes/${mobile}`, // 传参：手机号http://toutiao.itheima.net/v1_0/sms/codes/:mobile
     });
 };
 
@@ -30,5 +28,12 @@ export const getUserInfo = () => {
         //     // 注意仔细看接口文档Bearer+空格+用户token
         //     Authorization: `Bearer ${store.state.user.token}`, //===> 容器模块下 => 具体容器名 ==> 存储对象 ==> 存储对象中存储的属性名 （token/refreshToken）
         // },
+    });
+};
+// 导出获取用户频道的请求
+export const getChannels = () => {
+    return request({
+        method: "GET",
+        url: "/v1_0/user/channels",
     });
 };
