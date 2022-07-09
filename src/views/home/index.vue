@@ -56,6 +56,7 @@ export default {
 
 <style  lang="less" scoped>
 .home-container {
+  padding-top: 2.15rem;
   // ::v-deep 或者 /deep/  原因是由于我们在作用子组件的样式，如果在一个作用域组件样式当中，默认只会影响作用到组件的根节点上，如果想要作用的更深，要影响到后代元素，必须加上深度操作符号在所需样式前加::v-deep 或者 /deep/或者>>>
   // 给底部固定定位导航栏设置一个padding-bottom
   padding-bottom: 1.25rem; // 由于元素审查时候的单位是实际测量单位的1/2，所以50*2=100
@@ -75,6 +76,12 @@ export default {
   }
   /deep/.channel-tab {
     .van-tabs__wrap {
+      position: fixed;
+      top: 1.15rem;
+      // 定位以后。内容将不会被撑开，必须设置left:0 & right:0
+      left: 0;
+      right: 0;
+      z-index: 1;
       height: 1rem;
     }
     .van-tab {

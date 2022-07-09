@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- nav标题导航栏S -->
-    <van-nav-bar class="page-nav-bar">
+    <van-nav-bar class="page-nav-bar" fixed>
       <van-button
         slot="title"
         size="small"
