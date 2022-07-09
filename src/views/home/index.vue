@@ -60,7 +60,7 @@ export default {
   // ::v-deep 或者 /deep/  原因是由于我们在作用子组件的样式，如果在一个作用域组件样式当中，默认只会影响作用到组件的根节点上，如果想要作用的更深，要影响到后代元素，必须加上深度操作符号在所需样式前加::v-deep 或者 /deep/或者>>>
   // 给底部固定定位导航栏设置一个padding-bottom
   padding-bottom: 1.25rem; // 由于元素审查时候的单位是实际测量单位的1/2，所以50*2=100
-  ::v-deep .van-nav-bar__title {
+  /deep/ .van-nav-bar__title {
     max-width: unset;
     .search-btn {
       width: 6.9375rem;
