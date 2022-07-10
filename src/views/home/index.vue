@@ -1,9 +1,9 @@
 <template>
   <div class="home-container">
-    <!-- nav标题导航栏S -->
+    <!-- nav标题栏S -->
     <SearchTab></SearchTab>
-    <!-- nav标题导航栏E -->
-    <!-- Tab标签页S -->
+    <!-- nav标题导E -->
+    <!-- Tab导航栏S -->
     <van-tabs v-model="active" animated swipeable class="channel-tab">
       <van-tab :title="item.name" v-for="item in channels" :key="item.id">
         <ArticalList :channel="item"></ArticalList>
@@ -11,11 +11,24 @@
       <!--为了避免最后一项标签拉不出来，最右侧设置一个空盒子进行占位 -->
       <div class="placehoder" slot="nav-right"></div>
       <!-- 使用vant  Tab标签中的slot=nav-right定位到最右侧 -->
-      <div slot="nav-right" class="hamburger-nav">
+      <div slot="nav-right" class="hamburger-nav" @click="editIsShow = true">
         <i class="toutiao toutiao-gengduo"></i>
       </div>
     </van-tabs>
-    <!-- Tab标签页E -->
+    <!-- Tab导航栏E -->
+    <!-- 频道弹出层S -->
+    <van-popup
+      v-model="editIsShow"
+      closeable
+      round
+      close-icon-position="top-left"
+      position="bottom"
+      :style="{ height: '100%' }"
+    >
+      <!-- 显示弹出层内容组件 -->
+      <ChannelEdit :channelArr="channels" :activeNum="active"></ChannelEdit>
+    </van-popup>
+    <!-- 频道弹出层E -->
   </div>
 </template>
 
@@ -25,15 +38,18 @@ import SearchTab from "@/components/SearchTab.vue";
 import ArticalList from "@/views/home/components/ArtcalList.vue";
 // 导入封装好的获取用户频道的请求
 import { getChannels } from "@/api/user";
+// 引入弹出层内容组件
+import ChannelEdit from "@/views/home/components/ChannelEdit";
 export default {
   name: "HomeIndex",
-  components: { SearchTab, ArticalList },
+  components: { SearchTab, ArticalList, ChannelEdit },
 
   data() {
     return {
       // 通过名称匹配在标签指定 name 属性的情况下，v-model 的值为当前标签的 name（此时无法通过索引值来匹配标签）。
       active: 0,
       channels: [], // 用户频道列表
+      editIsShow: false,
     };
   },
   created() {
