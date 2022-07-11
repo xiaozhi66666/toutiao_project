@@ -26,7 +26,11 @@
       :style="{ height: '100%' }"
     >
       <!-- 显示弹出层内容组件 -->
-      <ChannelEdit :channelArr="channels" :activeNum="active"></ChannelEdit>
+      <ChannelEdit
+        :channelArr="channels"
+        :activeNum="active"
+        @changeActive="changeActiveFn"
+      ></ChannelEdit>
     </van-popup>
     <!-- 频道弹出层E -->
   </div>
@@ -49,7 +53,7 @@ export default {
       // 通过名称匹配在标签指定 name 属性的情况下，v-model 的值为当前标签的 name（此时无法通过索引值来匹配标签）。
       active: 0,
       channels: [], // 用户频道列表
-      editIsShow: false,
+      editIsShow: false, // 用来控制是否展示弹出层组件
     };
   },
   created() {
@@ -65,6 +69,11 @@ export default {
       } catch (error) {
         this.$toast("获取失败！");
       }
+    },
+    changeActiveFn(index, editIsShow = true) {
+      // console.log("Home", index);
+      this.active = index;
+      this.editIsShow = editIsShow;
     },
   },
 };
