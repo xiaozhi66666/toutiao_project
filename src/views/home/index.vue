@@ -44,6 +44,11 @@ import ArticalList from "@/views/home/components/ArtcalList.vue";
 import { getChannels } from "@/api/user";
 // 引入弹出层内容组件
 import ChannelEdit from "@/views/home/components/ChannelEdit";
+// 引入vuex中的mapstate/然后在计算属性中...mapState['user']
+import { mapState } from "vuex";
+// 引入取出本地存储数据的方法
+import { getItem } from "@/utils/storage.js";
+
 export default {
   name: "HomeIndex",
   components: { SearchTab, ArticalList, ChannelEdit },
@@ -56,6 +61,9 @@ export default {
       editIsShow: false, // 用来控制是否展示弹出层组件
     };
   },
+  computed: {
+    ...mapState(["user"]), // 获取到用户的登录状态
+  },
   created() {
     this.loadChannels();
   },
@@ -63,11 +71,27 @@ export default {
 
   methods: {
     async loadChannels() {
-      const res = await getChannels();
-      this.channels = res.data.data.channels;
-      try {
-      } catch (error) {
-        this.$toast("获取失败！");
+      if (this.user) {
+        // 登录状态,直接从后台拿取数据
+        try {
+          const res = await getChannels();
+          this.channels = res.data.data.channels;
+        } catch (error) {
+          this.$toast("获取失败！");
+        }
+      } else {
+        // 未登录状态,从本地拿取数据
+        // 但是如果本地存储没有数据就重新发起一次获取所有频道的请求
+        if (getItem("TOKEN_CHANNEL")) {
+          this.channels = getItem("TOKEN_CHANNEL");
+        } else {
+          try {
+            const res = await getChannels();
+            this.channels = res.data.data.channels;
+          } catch (error) {
+            this.$toast("获取失败！");
+          }
+        }
       }
     },
     changeActiveFn(index, editIsShow = true) {
