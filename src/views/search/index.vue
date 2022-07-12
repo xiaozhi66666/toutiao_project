@@ -11,13 +11,16 @@
         background="#3296fa"
         shape="round"
         class="search-input"
-        @focuss="focussFn"
+        @focus="focusFn"
       />
     </form>
     <div class="search-show">
       <SearchResule v-if="isShow"></SearchResule>
       <!-- 用输入框绑定的v-model值来判断是否展示搜索建议列表 -->
-      <SearchSuggest v-else-if="searchVal"></SearchSuggest>
+      <SearchSuggest
+        v-else-if="searchVal"
+        :searchVal="searchVal"
+      ></SearchSuggest>
       <!--上述两个条件均不满足即展示搜索历史 -->
       <SearchHistroy v-else></SearchHistroy>
     </div>
@@ -52,14 +55,14 @@ export default {
 
   methods: {
     onSearch(val) {
-      console.log(val);
+      this.isShow = true;
     },
     onCancel() {
       //点击取消后的逻辑写在这里  ==> 取消方法
       this.$router.back();
     },
-    focussFn() {
-      console.log(222);
+    focusFn() {
+      this.isShow = false;
     },
   },
 };
